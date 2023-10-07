@@ -38,7 +38,7 @@ def generateRandomPartners(emails):
             
         reorder = False
         random.shuffle(emails)
-        pairs.clear
+        pairs = []
 
         for i in range(0, len(emails), 2):
                 personA = emails[i]
@@ -99,9 +99,17 @@ def getJson(json_file):
             return json.load(file)
     except json.JSONDecodeError as e:
             return []
+
+def notifyPeople(matches):
+    for match in matches:
+        print("send mail to " + match[0]["email"] + "about match with " + match[1]["name"])
+        print("send mail to " + match[1]["email"] + "about match with " + match[0]["name"])
+
+        mailer.sendmail("michael@michaelschaedler.li","your new match")
+
         
 emails = readEmails()
 emails = generateRandomPartners(emails)
-mailer.sendmail()
+notifyPeople(emails)
 
 
