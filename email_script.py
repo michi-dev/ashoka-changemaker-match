@@ -4,6 +4,7 @@ import json
 import time
 import datetime
 import sys
+import mailer
 
 def readEmails(): 
 
@@ -101,5 +102,6 @@ def getJson(json_file):
         
 emails = readEmails()
 emails = generateRandomPartners(emails)
+mailer.sendmail()
 
 
