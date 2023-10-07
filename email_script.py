@@ -3,7 +3,7 @@ import itertools
 import json
 import time
 import datetime
-
+import sys
 
 def readEmails(): 
 
@@ -28,8 +28,13 @@ def generateRandomPartners(emails):
     pairs = []
     existingCombinations = getJson('partner_history.json')
     reorder = True
-
+    startTime = time.time()
+    print("Starting Search..")
     while reorder:
+        if (time.time() - startTime) > 30:
+            print("Die Suche hat über dreissig Sekunden gedauert. Bitte prüfe, ob nicht bereits alle Changemaker gemached wurden.")
+            sys.exit()
+            
         reorder = False
         random.shuffle(emails)
         pairs.clear
@@ -41,28 +46,30 @@ def generateRandomPartners(emails):
 
                 if(checkExistingMatch(existingCombinations,pair)):
                         reorder = True
-                
+                else:
+                    updatePartnerHistory(pair)
                 pairs.append(pair)
+
 
     return pairs
 
-def updatePartnerHistory(emails): 
+def updatePartnerHistory(element): 
     partnerHistory = getJson('partner_history.json')
     
     timestamp = time.time()
     datetime_obj = datetime.datetime.fromtimestamp(timestamp)
     formatted_date = datetime_obj.strftime("%d.%m.%Y %H:%M:%S")
 
-    for element in emails:
-        numbers = sorted([
-            int(element[0]["ID"]),
-            int(element[1]["ID"])
-        ])
-        partnerHistory["matchesLogged"].append({
-            "changeMakerA": numbers[0],
-            "changeMakerB": numbers[1],
-            "timestamp": formatted_date
-        })
+    numbers = sorted([
+        int(element[0]["ID"]),
+        int(element[1]["ID"])
+    ])
+
+    partnerHistory["matchesLogged"].append({
+        "changeMakerA": numbers[0],
+        "changeMakerB": numbers[1],
+        "timestamp": formatted_date
+    })
 
 
     updateJson(partnerHistory,'partner_history.json')
