@@ -18,7 +18,6 @@ smtp_username = 'test@michaelschaedler.li'
 smtp_password = 'b8p5hjSVY5isb&$!'
 
 def sendmail(receiver_email,message):
-    message = "This is the body of your email."
     msg.attach(MIMEText(message, 'plain'))
     msg['To'] = receiver_email
 

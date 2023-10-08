@@ -105,7 +105,7 @@ def notifyPeople(matches):
         print("send mail to " + match[0]["email"] + "about match with " + match[1]["name"])
         print("send mail to " + match[1]["email"] + "about match with " + match[0]["name"])
 
-        mailer.sendmail("michael@michaelschaedler.li","your new match")
+    mailer.sendmail("michael@michaelschaedler.li","your new match")
 
         
 emails = readEmails()
