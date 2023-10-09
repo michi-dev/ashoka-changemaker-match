@@ -3,7 +3,6 @@ from email.mime.text import MIMEText
 
 # Email configuration
 sender_email = "test@michaelschaedler.li"
-subject = "Du wurdest mit einem Changemaker gemached!"
 
 # SMTP server configuration (for Gmail)
 smtp_server = 'asmtp.mail.hostpoint.ch'
@@ -11,7 +10,7 @@ smtp_port = 587
 smtp_username = 'test@michaelschaedler.li'
 smtp_password = 'b8p5hjSVY5isb&$!'
 
-def sendmail(receiver_email, message):
+def sendmail(receiver_email, subject, message):
     msg = MIMEText(message, 'html')
     msg['From'] = sender_email
     msg['Subject'] = subject

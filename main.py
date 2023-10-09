@@ -11,7 +11,7 @@ def readEmails():
 
     email_list = []
 
-    with open('./contacts.csv', 'r') as file:
+    with open('./contacts/contacts.csv', 'r') as file:
         for line in file:
             email = line.strip()
             rawData = email.split(',')
@@ -28,7 +28,7 @@ def generateRandomPartners(emails):
         raise ValueError("The number of emails must be even to generate unique pairs.")
     
     pairs = []
-    existingCombinations = getJson('partner_history.json')
+    existingCombinations = getJson('contacts/partner_history.json')
     reorder = True
     startTime = time.time()
     print("Starting Search..")
@@ -56,7 +56,7 @@ def generateRandomPartners(emails):
     return pairs
 
 def updatePartnerHistory(element): 
-    partnerHistory = getJson('partner_history.json')
+    partnerHistory = getJson('contacts/partner_history.json')
     
     timestamp = time.time()
     datetime_obj = datetime.datetime.fromtimestamp(timestamp)
@@ -74,7 +74,7 @@ def updatePartnerHistory(element):
     })
 
 
-    updateJson(partnerHistory,'partner_history.json')
+    updateJson(partnerHistory,'contacts/partner_history.json')
 
 def updateJson(array,json_file): 
     with open(json_file, "w") as file:
@@ -106,25 +106,19 @@ def notifyPeople(matches):
         for i in range(len(match)):
             email_content = renderHTMLTempalte(
                 {
-                    "{{MatchName}}": match[i]["name"],
+                    "{{MatchName}}": '✨' + match[i]["name"] + '✨',
                     "{{MatchEmail}}": match[i]["email"],
                     "{{MatchImage}}": imageEncoder.encodeImage("images/" + match[i]["ID"] + ".jpeg")
                 },
-                'email_template.html'
+                'templates/email_template.html'
             )
             
             if i is 0:
                 x = 1
             else:
                 x = 0
-            # Send email to the current match's email address
-            mailer.sendmail(match[x]["email"], email_content)
 
-
-        
-
-
-
+            mailer.sendmail(match[x]["email"],'Dein Changemaker-Match mit ' + match[i]["name"] + '🥳', email_content)
 
 def generateMatchingReport(matches):
     for match in matches:

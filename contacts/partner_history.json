@@ -1,0 +1,14 @@
+{
+    "matchesLogged": [
+        {
+            "changeMakerA": 1,
+            "changeMakerB": 4,
+            "timestamp": "09.10.2023 12:36:44"
+        },
+        {
+            "changeMakerA": 2,
+            "changeMakerB": 3,
+            "timestamp": "09.10.2023 12:36:44"
+        }
+    ]
+}
