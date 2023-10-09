@@ -102,14 +102,40 @@ def getJson(json_file):
 
 def notifyPeople(matches):
     for match in matches:
-        print("send mail to " + match[0]["email"] + "about match with " + match[1]["name"])
-        print("send mail to " + match[1]["email"] + "about match with " + match[0]["name"])
+        mailer.sendmail(match[0]["email"],"Your new match with " + match[1]["name"] + "(" + match[1]["email"] + ")")
+        mailer.sendmail(match[1]["email"],"Your new match with " + match[0]["name"] + "(" + match[0]["email"] + ")")
 
-    mailer.sendmail("michael@michaelschaedler.li","your new match")
+def generateMatchingReport(matches):
+    for match in matches:
+        print(match[0]["name"] + " matched with " + match[1]["name"])
 
+def renderHTMLTempalte(vars,template_file): 
+    works = False
+
+    with open(template_file, 'r') as file:
+        template = file.read()
+        works = True
+
+    if(works):
+        for key, value in vars.items():
+            template = template.replace(key, value.strip())
         
-emails = readEmails()
-emails = generateRandomPartners(emails)
-notifyPeople(emails)
+    return template
 
+
+
+
+#emails = readEmails()
+#emails = generateRandomPartners(emails)
+
+renderHTMLTempalte({
+    "{{MatchName}}": "Michael Schädler",
+    "{{MatchEmail}}": "michael@michaelschaedler.li",
+    "{{MatchImage}}": "images/2.png"    
+},
+'email_template.html'
+)
+
+#notifyPeople(emails)
+#generateMatchingReport(emails)
 
