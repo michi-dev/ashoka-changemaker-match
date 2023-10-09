@@ -12,7 +12,7 @@ smtp_username = 'test@michaelschaedler.li'
 smtp_password = 'b8p5hjSVY5isb&$!'
 
 def sendmail(receiver_email, message):
-    msg = MIMEText(message, 'plain')
+    msg = MIMEText(message, 'html')
     msg['From'] = sender_email
     msg['Subject'] = subject
     msg['To'] = receiver_email

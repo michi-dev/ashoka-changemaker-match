@@ -5,6 +5,7 @@ import time
 import datetime
 import sys
 import mailer
+import imageEncoder
 
 def readEmails(): 
 
@@ -102,8 +103,28 @@ def getJson(json_file):
 
 def notifyPeople(matches):
     for match in matches:
-        mailer.sendmail(match[0]["email"],"Your new match with " + match[1]["name"] + "(" + match[1]["email"] + ")")
-        mailer.sendmail(match[1]["email"],"Your new match with " + match[0]["name"] + "(" + match[0]["email"] + ")")
+        for i in range(len(match)):
+            email_content = renderHTMLTempalte(
+                {
+                    "{{MatchName}}": match[i]["name"],
+                    "{{MatchEmail}}": match[i]["email"],
+                    "{{MatchImage}}": imageEncoder.encodeImage("images/" + match[i]["ID"] + ".jpeg")
+                },
+                'email_template.html'
+            )
+            
+            if i is 0:
+                x = 1
+            else:
+                x = 0
+            # Send email to the current match's email address
+            mailer.sendmail(match[x]["email"], email_content)
+
+
+        
+
+
+
 
 def generateMatchingReport(matches):
     for match in matches:
@@ -125,17 +146,8 @@ def renderHTMLTempalte(vars,template_file):
 
 
 
-#emails = readEmails()
-#emails = generateRandomPartners(emails)
-
-renderHTMLTempalte({
-    "{{MatchName}}": "Michael Schädler",
-    "{{MatchEmail}}": "michael@michaelschaedler.li",
-    "{{MatchImage}}": "images/2.png"    
-},
-'email_template.html'
-)
-
-#notifyPeople(emails)
+emails = readEmails()
+emails = generateRandomPartners(emails)
+notifyPeople(emails)
 #generateMatchingReport(emails)
 
