@@ -10,9 +10,12 @@
 1. Loops through all contacts and generates random matches
 2. checks if the matches exist in contacts/partner_history.json
 3. if yes: repeats step 1 & 2
-4. sends emails to unique matches to inform them about their partner (using name, email and image)
 
 if the script cant find unique matches for 30 secs it stopps and informs the user that the history has to be cleared, because all matches were previously made
+
+
+## Output
+1.  sends emails to unique matches to inform them about their partner (using name, email and image)
 
 
 # requirements
