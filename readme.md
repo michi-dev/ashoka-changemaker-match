@@ -16,6 +16,7 @@ if the script cant find unique matches for 30 secs it stopps and informs the use
 
 ## Output
 1.  sends emails to unique matches to inform them about their partner (using name, email and image)
+2.  updates matching history
 
 
 # requirements
