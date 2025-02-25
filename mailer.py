@@ -7,8 +7,8 @@ sender_email = "test@michaelschaedler.li"
 # SMTP server configuration (for Gmail)
 smtp_server = 'asmtp.mail.hostpoint.ch'
 smtp_port = 587
-smtp_username = 'test@michaelschaedler.li'
-smtp_password = 'b8p5hjSVY5isb&$!'
+smtp_username = '....@michaelschaedler.li'
+smtp_password = '......'
 
 def sendmail(receiver_email, subject, message):
     msg = MIMEText(message, 'html')
